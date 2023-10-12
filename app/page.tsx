@@ -1,9 +1,5 @@
-import BooleanSearchForm from "@/components/BooleanSearchForm/BooleanSearchForm";
+import Home from "@/scenes/Home/Home";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <BooleanSearchForm />
-    </main>
-  );
+export default function HomePage() {
+  return <Home />;
 }
