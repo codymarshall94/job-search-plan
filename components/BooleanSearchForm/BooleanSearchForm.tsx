@@ -73,6 +73,22 @@ const BooleanSearchForm = ({
     setter((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
   };
 
+  const resetForm = () => {
+    setJobSite("");
+    setJobTitle("");
+    setPositionLevel("");
+    setLocation("");
+    setSkills("");
+    setNotWords("");
+    setSelectedJobSite("");
+    setSelectedJobTitles([]);
+    setSelectedPositionLevels([]);
+    setSelectedLocations([]);
+    setSelectedSkills([]);
+    setSelectedNotWords([]);
+    setSearchString("");
+  };
+
   const generateSearchString = () => {
     setIsSaved(false);
     setIsCopied(false);
@@ -186,13 +202,25 @@ const BooleanSearchForm = ({
             }
             onRemove={(index) => removeSelection(index, setSelectedNotWords)}
           />
-          <button
-            type="button"
-            onClick={generateSearchString}
-            className="flex cursor-pointer items-center rounded-md border-2 border-black bg-[#C4A1FF] px-10 py-3 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none"
-          >
-            Generate Search String
-          </button>
+          <div className="flex items-center">
+            <button
+              type="button"
+              onClick={generateSearchString}
+              className="flex cursor-pointer items-center rounded-md border-2 border-black bg-[#C4A1FF] px-10 py-3 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none"
+            >
+              Generate Search String
+            </button>
+            <ActionButton
+              onClick={resetForm}
+              text="Form Reset"
+              icon={
+                <SvgIcon
+                  src="M440-122q-121-15-200.5-105.5T160-440q0-66 26-126.5T260-672l57 57q-38 34-57.5 79T240-440q0 88 56 155.5T440-202v80Zm80 0v-80q87-16 143.5-83T720-440q0-100-70-170t-170-70h-3l44 44-56 56-140-140 140-140 56 56-44 44h3q134 0 227 93t93 227q0 121-79.5 211.5T520-122Z"
+                  alt="Reset"
+                />
+              }
+            />
+          </div>
         </form>
         {searchString && (
           <div className="mt-4">
