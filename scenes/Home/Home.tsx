@@ -67,7 +67,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col justify-center items-center h-screen bg-[#BAFCA2]">
+    <main className="flex flex-col justify-center items-center min-h-screen bg-[#BAFCA2]">
       <h1 className="text-2xl font-semibold mb-4">NeoBoolean Search</h1>
       <div className="flex justify-between items-center mb-4">
         <button
