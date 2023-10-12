@@ -66,14 +66,9 @@ export default function Home() {
     localStorage.setItem("savedSearches", JSON.stringify(updatedSavedSearches));
   };
 
-  const deleteAllSavedSearches = () => {
-    setSavedSearches([]);
-    localStorage.removeItem("savedSearches");
-  };
-
   return (
-    <main className="flex flex-col justify-center items-center min-h-screen bg-[#BAFCA2]">
-      <h2 className="text-4xl font-semibold mb-4">NeoBoolean Search</h2>
+    <main className="flex flex-col justify-center items-center h-screen bg-[#BAFCA2]">
+      <h1 className="text-2xl font-semibold mb-4">NeoBoolean Search</h1>
       <div className="flex justify-between items-center mb-4">
         <button
           type="button"
