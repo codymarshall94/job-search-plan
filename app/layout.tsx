@@ -1,3 +1,4 @@
+import Sidebar from "@/components/Sidebar/Sidebar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Lexend_Mega } from "next/font/google";
@@ -16,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${lexend.className} min-h-screen`}>{children}</body>
+      <body className={`${lexend.className} min-h-screen flex`}>
+        <Sidebar />
+        <div className="flex flex-col flex-1 h-screen bg-[#BAFCA2]">{children}</div>
+      </body>
     </html>
   );
 }

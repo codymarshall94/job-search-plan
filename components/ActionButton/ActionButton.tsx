@@ -1,7 +1,7 @@
 interface ActionButtonProps {
   onClick: () => void;
   isDisabled?: boolean;
-  text: string;
+  text?: string;
   icon: React.ReactNode;
 }
 
