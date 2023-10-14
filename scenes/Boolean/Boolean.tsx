@@ -4,6 +4,7 @@ import BooleanSearchForm from "@/components/BooleanSearchForm/BooleanSearchForm"
 import Drawer from "@/components/Drawer/Drawer";
 import DrawerItem from "@/components/Drawer/components/DrawerItem/DrawerItem";
 import Modal from "@/components/Modal/Modal";
+import PageHeader from "@/components/PageHeader/PageHeader";
 import { useEffect, useState } from "react";
 
 export default function BooleanSearch() {
@@ -30,7 +31,6 @@ export default function BooleanSearch() {
     if (savedSearchesFromLocalStorage) {
       setSavedSearches(JSON.parse(savedSearchesFromLocalStorage));
     }
-    console.log(savedSearchesFromLocalStorage);
   }, []);
 
   const copySavedSearch = (searchString: string) => {
@@ -67,27 +67,32 @@ export default function BooleanSearch() {
   };
 
   return (
-    <main className="flex flex-col justify-center items-center min-h-screen bg-[#BAFCA2]">
-      <h1 className="text-2xl font-semibold mb-4">NeoBoolean Search</h1>
-      <div className="flex justify-between items-center mb-4">
+    <main className="flex flex-col">
+      <PageHeader
+        title="Boolean Search"
+        description="Boolean Search can refine your job search!"
+      />
+      <div className="text-center mt-12 mb-4">
         <button
           type="button"
           onClick={() => setIsDrawerActive(!isDrawerActive)}
-          className="cursor-pointer rounded-md border-2 border-black bg-white px-4 py-1.5 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none"
+          className="cursor-pointer rounded-md border-2 border-black bg-[#C4A1FF] px-4 py-1.5 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none"
         >
           Saved Searches
         </button>
       </div>
-      <BooleanSearchForm
-        searchString={searchString}
-        setSearchString={setSearchString}
-        openModal={openModal}
-        isSaved={isSaved}
-        setIsSaved={setIsSaved}
-        isCopied={isCopied}
-        setIsCopied={setIsCopied}
-        copyToClipboard={copySavedSearch}
-      />
+      <div className="flex flex-col items-center justify-center">
+        <BooleanSearchForm
+          searchString={searchString}
+          setSearchString={setSearchString}
+          openModal={openModal}
+          isSaved={isSaved}
+          setIsSaved={setIsSaved}
+          isCopied={isCopied}
+          setIsCopied={setIsCopied}
+          copyToClipboard={copySavedSearch}
+        />
+      </div>
       <Drawer active={isDrawerActive} setActive={setIsDrawerActive}>
         <>
           <DrawerItem

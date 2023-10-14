@@ -19,8 +19,8 @@ export default function InterviewQuestions({
     <div>
       {!interviewStarted ? (
         <div className="flex flex-col text-center my-4 gap-4">
-          <h2 className="text-xl font-bold">
-            Interview Questions: {selectedTopic}
+          <h2 className="text-xl font-bold w-fit mx-auto bg-white rounded-md border-2 border-black py-4 px-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none">
+            {selectedTopic}
           </h2>
           <p className="text-lg font-bold text-center text-[#2F2F2F] mt-4">
             You will have 30 seconds to answer each question. Be concise!

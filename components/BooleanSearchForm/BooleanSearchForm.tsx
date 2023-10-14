@@ -225,7 +225,7 @@ const BooleanSearchForm = ({
         {searchString && (
           <div className="mt-4">
             <div className="flex items-center">
-              <code className="text-black bg-white border-2 border-black p-2 rounded-md border-2 border-black px-10 py-3 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex-grow">
+              <code className="text-black bg-white border-2 border-black p-2 rounded-md px-10 py-3 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex-grow">
                 {searchString}
               </code>
               <ActionButton
