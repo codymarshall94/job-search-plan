@@ -8,6 +8,7 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/resources", label: "Resources" },
   { href: "/challenges", label: "Challenges" },
+  { href: "/job-boards", label: "Job Boards" },
 ];
 
 const dropdownLinks = [
