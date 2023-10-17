@@ -1,5 +1,5 @@
-import TechStack from "@/scenes/TechStack/TechStack";
+import Technologies from "@/scenes/Technologies/Technologies";
 
 export default function JobBoardsPage() {
-  return <TechStack />;
+  return <Technologies />;
 }

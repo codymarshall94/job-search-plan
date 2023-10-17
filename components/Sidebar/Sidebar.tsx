@@ -16,6 +16,7 @@ const links = [
 const dropdownLinks = [
   { href: "/boolean-search", label: "Bool Search" },
   { href: "/interview", label: "Interview" },
+  { href: "/tech-stack", label: "Tech Stack" },
 ];
 
 export default function Sidebar() {
