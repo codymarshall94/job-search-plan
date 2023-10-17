@@ -7,8 +7,10 @@ import { usePathname } from "next/navigation";
 const links = [
   { href: "/", label: "Home" },
   { href: "/resources", label: "Resources" },
+  { href: "/technologies", label: "Technologies" },
   { href: "/challenges", label: "Challenges" },
   { href: "/job-boards", label: "Job Boards" },
+  { href: "/books", label: "Books" },
 ];
 
 const dropdownLinks = [

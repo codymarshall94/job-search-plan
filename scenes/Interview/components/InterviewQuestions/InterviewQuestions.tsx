@@ -1,7 +1,7 @@
 import Button from "@/components/Button/Button";
 
 interface InterviewQuestionsProps {
-  selectedTopic: string;
+  selectedTopic: string | null;
   questions: string[];
   currentQuestionIndex: number;
   onClickStart: () => void;
@@ -16,9 +16,9 @@ export default function InterviewQuestions({
   interviewStarted,
 }: InterviewQuestionsProps) {
   return (
-    <div>
+    <div className="p-4">
       {!interviewStarted ? (
-        <div className="flex flex-col text-center my-4 gap-4">
+        <div className="flex flex-col text-center my-4 gap-4 ">
           <h2 className="text-xl font-bold w-fit mx-auto bg-white rounded-md border-2 border-black py-4 px-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none">
             {selectedTopic}
           </h2>

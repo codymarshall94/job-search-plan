@@ -3,41 +3,40 @@
 import Filter from "@/components/Filter/Filter";
 import List from "@/components/List/List";
 import PageHeader from "@/components/PageHeader/PageHeader";
-import { WEB_DEV_RESOURCES, WebDevTag } from "@/constants/resources";
+import { WEB_BOOKS } from "@/constants/books";
+import { WebDevTag } from "@/constants/resources";
 import { useState } from "react";
 
-const resourceTags = [
-  "Documentation",
-  "HTML",
-  "CSS",
+const bookTags = [
   "JavaScript",
-  "Tutorials",
-  "Q&A",
+  "TypeScript",
   "Programming",
-  "Version Control",
   "Web Development",
-  "Code Hosting",
-  "Front-End",
+  "CSS",
   "Web Design",
-  "UI/UX",
-  "Community",
-  "Blogging",
+  "Node.js",
+  "Frontend Development",
+  "HTML",
+  "React",
+  "Next.js",
+  "Best Practices",
+  "HTML5",
+  "Data-Intensive",
+  "Databases",
+  "System Design",
 ];
 
-export default function Resources() {
-  const [selectedTag, setSelectedTag] = useState<WebDevTag | "All">("All");
+export default function Books() {
+  const [selectedTag, setSelectedTag] = useState<string | "All">("All");
 
-  const filteredResources =
+  const filteredBooks =
     selectedTag === "All"
-      ? WEB_DEV_RESOURCES
-      : WEB_DEV_RESOURCES.filter((resource) =>
-          resource.tags.includes(selectedTag)
-        );
+      ? WEB_BOOKS
+      : WEB_BOOKS.filter((book) => book.tags.includes(selectedTag));
 
   const handleTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedTag(event.target.value as WebDevTag | "All");
   };
-
   return (
     <>
       <PageHeader
@@ -47,9 +46,9 @@ export default function Resources() {
       <Filter
         selectedTag={selectedTag}
         handleTagChange={handleTagChange}
-        filterTags={resourceTags}
+        filterTags={bookTags}
       />
-      <List items={filteredResources} />
+      <List items={filteredBooks} />
     </>
   );
 }

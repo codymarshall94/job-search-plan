@@ -1,37 +1,60 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { INTERVIEW_SPOKEN, InterviewPrep } from "@/constants/interview";
-import InterviewTopicSelection from "./components/InterviewTopicSelection/InterviewTopicSelection";
 import InterviewQuestions from "./components/InterviewQuestions/InterviewQuestions";
 import ActionButton from "@/components/ActionButton/ActionButton";
 import SvgIcon from "@/components/SvgIcon/SvgIcon";
+import InterviewTopicSelection from "./components/InterviewTopicSelection/InterviewTopicSelection";
+import { INTERVIEW_TECHNICAL } from "@/constants/techInterview";
+import { INTERVIEW_BEHAVIORAL } from "@/constants/behavioralInterview";
+import StepButton from "./components/StepButtons/StepButtons";
+import PageHeader from "@/components/PageHeader/PageHeader";
 
-type InterviewLevel = typeof INTERVIEW_SPOKEN.junior;
-type InterviewTopic = keyof InterviewLevel;
+type InterviewType = "Technical" | "Behavioral" | null;
+type InterviewLevel = "junior" | "mid" | "senior";
+
+const topics = ["html", "css", "javascript", "react", "nextjs"];
 
 export default function Interview() {
-  const [interviewType, setInterviewType] =
-    useState<InterviewPrep>(INTERVIEW_SPOKEN);
-  const [interviewLevel, setInterviewLevel] = useState<InterviewLevel>(
-    INTERVIEW_SPOKEN.junior
-  );
-  const [interviewTopic, setInterviewTopic] = useState<
-    InterviewTopic | undefined
-  >();
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [interviewType, setInterviewType] = useState<InterviewType>(null);
+  const [interviewLevel, setInterviewLevel] =
+    useState<InterviewLevel>("junior");
+  const [interviewTopic, setInterviewTopic] = useState<string | null>(null);
   const [questions, setQuestions] = useState<string[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [interviewStarted, setInterviewStarted] = useState<boolean>(false);
   const [seconds, setSeconds] = useState<number>(30);
 
-  const interviewTopics = Object.keys(interviewLevel);
+  const steps = [
+    { step: 1, title: "Select interview type", action: setInterviewType },
+    { step: 2, title: "Select interview level", action: setInterviewLevel },
+    { step: 3, title: "Select interview topic", action: setInterviewTopic },
+    { step: 4, title: "Start the interview" },
+  ];
 
   useEffect(() => {
-    if (interviewTopic) {
-      const shuffledQuestions = shuffleArray(interviewLevel[interviewTopic]);
-      setQuestions(shuffledQuestions);
+    console.log(interviewType, interviewLevel, interviewTopic);
+  }, [interviewType, interviewLevel, interviewTopic]);
+
+  const handleNextStep = () => {
+    if (currentStep < steps.length) {
+      setCurrentStep(currentStep + 1);
     }
-  }, [interviewTopic]);
+  };
+
+  const handlePreviousStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleAction = (action: any, value: any) => {
+    if (action) {
+      action(value);
+      handleNextStep();
+    }
+  };
 
   const shuffleArray = (array: string[]) => {
     const shuffledArray = [...array];
@@ -59,6 +82,18 @@ export default function Interview() {
   };
 
   useEffect(() => {
+    if (interviewTopic) {
+      console.log(interviewType, interviewLevel, interviewTopic);
+      const shuffledQuestions = shuffleArray(
+        interviewType === "Technical"
+          ? INTERVIEW_TECHNICAL[interviewLevel][interviewTopic]
+          : INTERVIEW_BEHAVIORAL
+      );
+      setQuestions(shuffledQuestions);
+    }
+  }, [interviewTopic, interviewType, interviewLevel]);
+
+  useEffect(() => {
     if (interviewStarted) {
       const timer = setInterval(() => {
         if (seconds > 0) {
@@ -73,12 +108,14 @@ export default function Interview() {
       return () => clearInterval(timer);
     }
   }, [interviewStarted, currentQuestionIndex, seconds, questions]);
+
   return (
     <div className="flex flex-col items-center justify-center mt-4 h-full">
-      <h1 className="bg-white rounded-md border-2 border-black py-4 px-8 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none">
-        Interview Prep
-      </h1>
-      <div className="flex flex-col items-center justify-center mt-4 gap-4 flex-grow">
+      <PageHeader
+        title="Interview"
+        description="Practice your interview skills through a mock interview."
+      />
+      <div className="flex flex-col mt-4 gap-4 flex-grow">
         {interviewStarted && (
           <div className="flex items-center justify-center my-12 gap-4">
             <p
@@ -99,20 +136,60 @@ export default function Interview() {
             />
           </div>
         )}
-        {!interviewTopic ? (
-          <InterviewTopicSelection
-            topics={interviewTopics}
-            onSelectTopic={setInterviewTopic}
-          />
-        ) : (
-          <InterviewQuestions
-            selectedTopic={interviewTopic}
-            questions={questions}
-            currentQuestionIndex={currentQuestionIndex}
-            onClickStart={startInterview}
-            interviewStarted={interviewStarted}
-          />
-        )}
+        <div className="flex flex-col mt-4 gap-4 flex-grow">
+          {currentStep === 4 ? (
+            <InterviewQuestions
+              selectedTopic={interviewTopic}
+              questions={questions}
+              currentQuestionIndex={currentQuestionIndex}
+              onClickStart={startInterview}
+              interviewStarted={interviewStarted}
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center gap-4">
+              {currentStep !== 1 && (
+                <StepButton
+                  currentStep={currentStep}
+                  handlePreviousStep={handlePreviousStep}
+                  handleNextStep={handleNextStep}
+                  isFirstStep={currentStep === 1}
+                  isLastStep={currentStep === 3}
+                />
+              )}
+              <p className="text-lg font-bold text-center text-[#2F2F2F] mt-4">
+                {steps[currentStep - 1].title}
+              </p>
+
+              {currentStep === 3 ? (
+                <InterviewTopicSelection
+                  items={topics}
+                  onSelectItem={(value: string) =>
+                    handleAction(steps[currentStep - 1].action, value)
+                  }
+                />
+              ) : (
+                <div>
+                  {currentStep === 1 && (
+                    <InterviewTopicSelection
+                      items={["Technical", "Behavioral"]}
+                      onSelectItem={(value: string) =>
+                        handleAction(steps[currentStep - 1].action, value)
+                      }
+                    />
+                  )}
+                  {currentStep === 2 && (
+                    <InterviewTopicSelection
+                      items={["junior", "mid", "senior"]}
+                      onSelectItem={(value: string) =>
+                        handleAction(steps[currentStep - 1].action, value)
+                      }
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
